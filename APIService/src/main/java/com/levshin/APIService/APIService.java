@@ -56,19 +56,21 @@ public class APIService {
     private void registerOrder(Order order) {
         order.setRecdTime(LocalDateTime.now());
         order.setStatus(OrderStatus.NEW);
+        repository.save(order);
     }
 
-    public Order update(Order order) {
-        if (order.getStatus().equals(OrderStatus.COOKED)) {
+    public Order update(Order receivedOrder) {
+        Order order = repository.findBySystemId(receivedOrder.getSystemId()).orElseThrow(NoSuchElementException::new);
+        if (receivedOrder.getStatus().equals(OrderStatus.COOKED)) {
             client.sendOrderToDelivery(order);
             return repository.save(order);
         }
-        if (order.getStatus().equals(OrderStatus.DELIVERED)) {
+        if (receivedOrder.getStatus().equals(OrderStatus.DELIVERED)) {
             order.setStatus(OrderStatus.CLOSED);
             order.setFinishTime(LocalDateTime.now());
             return repository.save(order);
         }
-        if (order.getStatus().equals(OrderStatus.SUSPEND)) {
+        if (receivedOrder.getStatus().equals(OrderStatus.SUSPEND)) {
             //TODO need some logic, haven't decided yet
             return repository.save(order);
         }

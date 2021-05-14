@@ -27,7 +27,7 @@ public class APIController {
     }
 
     @PostMapping
-    public Order createOrder(Order order) {
+    public Order createOrder(@RequestBody Order order) {
         return service.create(order);
     }
 

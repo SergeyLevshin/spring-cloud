@@ -1,7 +1,7 @@
 package com.levshin.CookingService;
 
-import com.levshin.CookingService.domain.OrderStatus;
 import com.levshin.CookingService.domain.Order;
+import com.levshin.CookingService.domain.OrderStatus;
 import com.levshin.CookingService.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +52,9 @@ public class CookingService {
     public Order createOrder(Order order) {
         order.setRecdTime(LocalDateTime.now());
         order.setStatus(OrderStatus.COOKING);
+        repository.save(order);
         pizzaMaker.process(order);
-        return repository.save(order);
+        return order;
     }
 
     public Order cancelOrder(long id) {
@@ -70,5 +71,6 @@ public class CookingService {
         }
         repository.save(order);
     }
+
 }
 
