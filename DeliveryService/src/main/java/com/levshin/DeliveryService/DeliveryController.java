@@ -38,7 +38,7 @@ public class DeliveryController {
     }
 
     @PostMapping
-    public Order registerOrder(Order order) {
+    public Order registerOrder(@RequestBody Order order) {
         return service.receiveOrder(order);
     }
 }

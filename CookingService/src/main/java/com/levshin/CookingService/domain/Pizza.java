@@ -1,7 +1,12 @@
 package com.levshin.CookingService.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "pizzas")
 public class Pizza {
@@ -13,20 +18,4 @@ public class Pizza {
 
     @Column(name = "pizza_name", unique = true)
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

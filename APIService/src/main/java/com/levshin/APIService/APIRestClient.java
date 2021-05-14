@@ -24,7 +24,7 @@ public class APIRestClient {
         this.restTemplate = restTemplate;
     }
 
-    @Retryable(value = Exception.class, maxAttempts = 10, backoff = @Backoff(delay = 60))
+    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 3))
     public Order sendOrderToCooking(Order order) {
         order.setStatus(OrderStatus.NEW);
         sendOrderToService(order, OrderStatus.COOKING, "http://COOKINGSERVICE/cooking");
@@ -32,7 +32,7 @@ public class APIRestClient {
         return order;
     }
 
-    @Retryable(value = Exception.class, maxAttempts = 10, backoff = @Backoff(delay = 60))
+    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 3))
     public Order sendOrderToDelivery(Order order) {
 
         sendOrderToService(order, OrderStatus.DELIVERING, "http://DELIVERYSERVICE/cooking");
