@@ -1,33 +1,28 @@
 package com.levshin.APIService;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.levshin.APIService.domain.Order;
 import com.levshin.APIService.domain.OrderStatus;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
 
 @Component
 public class APIRestClient {
 
-    private final RestTemplate restTemplate;
+   private final WebClient webClient;
 
-    public APIRestClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public APIRestClient(WebClient webClient) {
+        this.webClient = webClient;
     }
 
     @Retryable(value = Exception.class, maxAttempts = 10, backoff = @Backoff(delay = 60))
     public Order sendOrderToCooking(Order order) {
         order.setStatus(OrderStatus.NEW);
-        sendOrderToService(order, OrderStatus.COOKING, "http://COOKINGSERVICE/cooking");
+        sendOrderToService(order, "http://COOKINGSERVICE/cooking");
 
         return order;
     }
@@ -35,37 +30,21 @@ public class APIRestClient {
     @Retryable(value = Exception.class, maxAttempts = 10, backoff = @Backoff(delay = 60))
     public Order sendOrderToDelivery(Order order) {
 
-        sendOrderToService(order, OrderStatus.DELIVERING, "http://DELIVERYSERVICE/cooking");
+        sendOrderToService(order, "http://DELIVERYSERVICE/cooking");
 
         return order;
     }
 
     @Transactional
-    private void sendOrderToService(Order order, OrderStatus statusIfSuccess, String uri) {
-
-        String json = getJsonString(order);
-
-        HttpEntity<?> entity = new HttpEntity<>(json);
-
-        ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
-
-        HttpStatus statusCode = responseEntity.getStatusCode();
-        if (statusCode.is2xxSuccessful()) {
-            order.setStatus(OrderStatus.DELIVERING);
-        }
-        else {
-            order.setStatus(OrderStatus.SUSPEND);
-        }
+    private Order sendOrderToService(Order order, String uri) {
+        return webClient.post()
+                .uri(uri)
+                .body(Mono.just(order), Order.class)
+                .retrieve()
+                .bodyToMono(Order.class)
+                .block();
 
     }
 
-    private String getJsonString(Order order) {
-        String json = "";
-        try {
-            json = new ObjectMapper().writeValueAsString(order);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
+
 }
