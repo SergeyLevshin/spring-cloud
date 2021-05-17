@@ -44,6 +44,10 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.spring4all</groupId>
 			<artifactId>swagger-spring-boot-starter</artifactId>
 			<version>1.9.1.RELEASE</version>
@@ -79,15 +83,6 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 			<artifactId>javax.persistence-api</artifactId>
 			<version>2.2</version>
 		</dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-
 	</dependencies>
 
 	<build>
