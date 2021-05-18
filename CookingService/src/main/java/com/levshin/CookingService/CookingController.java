@@ -38,7 +38,8 @@ public class CookingController {
     }
 
     @PostMapping
-    public Order createOrder( Order order) {
+    public Order createOrder(@RequestBody Order order) {
+        System.out.println(order);
         return service.createOrder(order);
     }
 

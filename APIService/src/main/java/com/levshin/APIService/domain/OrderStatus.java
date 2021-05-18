@@ -6,6 +6,7 @@ public enum OrderStatus {
     COOKING,
     COOKED,
     CLOSED,
+    COMPLETED,
     DELIVERING,
     DELIVERED,
     NEW,

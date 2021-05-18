@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
+import java.time.Duration;
 
 @Component
 public class APIRestClient {
@@ -22,7 +23,7 @@ public class APIRestClient {
     @Retryable(value = Exception.class, maxAttempts = 10, backoff = @Backoff(delay = 60))
     public Order sendOrderToCooking(Order order) {
         order.setStatus(OrderStatus.NEW);
-        sendOrderToService(order, "http://COOKINGSERVICE/cooking");
+        sendOrderToService(order, "http://localhost:8901/cooking");//"http://COOKINGSERVICE/cooking");
 
         return order;
     }
@@ -41,7 +42,7 @@ public class APIRestClient {
                 .uri(uri)
                 .body(Mono.just(order), Order.class)
                 .retrieve()
-                .bodyToMono(Order.class)
+                .bodyToMono(Order.class).timeout(Duration.ofMillis(10000))
                 .block();
 
     }

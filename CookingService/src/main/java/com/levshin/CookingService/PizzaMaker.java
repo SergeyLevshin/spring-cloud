@@ -45,12 +45,6 @@ public class PizzaMaker {
 
     //    pretty stupid logic, but for now it will be so
     private void cook(Pizza pizza) {
-        try {
-            Thread.sleep(1000);
-            System.out.println(pizza.getName() + " is cooking!");
-        } catch (InterruptedException e) {
-            System.out.println("Something wrong was happened at a cuisine!");
-            e.printStackTrace();
-        }
+        System.out.println(pizza.getName() + " is cooking!");
     }
 }
