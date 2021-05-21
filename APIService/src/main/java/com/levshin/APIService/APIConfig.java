@@ -10,9 +10,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class APIConfig {
 
     @Bean
-    public WebClient webClient() {
+//    @LoadBalanced
+    public WebClient.Builder getWebClient() {
         return WebClient.builder()
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     }
 }

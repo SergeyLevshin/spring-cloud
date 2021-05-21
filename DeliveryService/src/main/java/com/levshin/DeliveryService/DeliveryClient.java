@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(value = "PIZZA-API")
+@FeignClient(name = "PIZZA-API")
 public interface DeliveryClient {
 
     @PutMapping("/pizza-api")

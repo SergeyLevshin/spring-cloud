@@ -65,10 +65,10 @@ public class CookingService {
     }
 
     public void finishOrder(Order order) {
-//        client.updateOrder(order);
+        client.updateOrder(order);
         System.out.println(order);
         if (!order.getStatus().equals(OrderStatus.CANCELED)) {
-            order.setStatus(OrderStatus.COMPLETED);
+            order.setStatus(OrderStatus.COOKED);
         }
         repository.save(order);
     }

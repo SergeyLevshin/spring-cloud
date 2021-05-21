@@ -62,12 +62,14 @@ public class APIService {
     public Order update(Order receivedOrder) {
         Order order = repository.findBySystemId(receivedOrder.getSystemId()).orElseThrow(NoSuchElementException::new);
         if (receivedOrder.getStatus().equals(OrderStatus.COOKED)) {
+            order.setStatus(OrderStatus.DELIVERING);
             client.sendOrderToDelivery(order);
             return repository.save(order);
         }
         if (receivedOrder.getStatus().equals(OrderStatus.DELIVERED)) {
             order.setStatus(OrderStatus.CLOSED);
             order.setFinishTime(LocalDateTime.now());
+            System.out.println("The order was delivered and closed. \n" + order);
             return repository.save(order);
         }
         if (receivedOrder.getStatus().equals(OrderStatus.SUSPEND)) {

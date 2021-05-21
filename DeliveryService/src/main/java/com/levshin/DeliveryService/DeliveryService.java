@@ -1,11 +1,10 @@
 package com.levshin.DeliveryService;
 
-import com.levshin.DeliveryService.domain.OrderStatus;
 import com.levshin.DeliveryService.domain.Order;
+import com.levshin.DeliveryService.domain.OrderStatus;
 import com.levshin.DeliveryService.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,30 +45,19 @@ public class DeliveryService {
                 .getStatus();
     }
 
-    @Transactional
     public Order receiveOrder(Order order) {
         order.setRecdTime(LocalDateTime.now());
-        order.setStatus(OrderStatus.NEW);
+        order.setStatus(OrderStatus.DELIVERING);
         deliverOrder(order);
+        if (order.getStatus().equals(OrderStatus.DELIVERED)) {
+            client.updateOrder(order);
+        }
         return repository.save(order);
     }
 
     //very important business logic
-    @Transactional
     private void deliverOrder(Order order) {
-        order.setStatus(OrderStatus.DELIVERING);
-        try {
-            for(int i = 0; i < 5; i++) {
-                Thread.sleep(500);
-                System.out.println("The order is delivering...");
-            }
-            order.setStatus(OrderStatus.DELIVERED);
-        } catch (InterruptedException e) {
-            System.out.println("Something wrong was happen.");
-        }
-        if (order.getStatus().equals(OrderStatus.DELIVERED)) {
-            client.updateOrder(order);
-            order.setStatus(OrderStatus.CLOSED);
-        }
+        System.out.println("The order is delivering...");
+        order.setStatus(OrderStatus.DELIVERED);
     }
 }

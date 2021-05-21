@@ -20,7 +20,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "system_id")
+    @Column(name = "system_id", unique = true)
     private Long systemId;
 
     @JsonIgnore

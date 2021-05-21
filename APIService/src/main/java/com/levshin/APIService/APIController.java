@@ -32,7 +32,7 @@ public class APIController {
     }
 
     @PutMapping
-    public Order updateOrder(Order order) {
+    public Order updateOrder(@RequestBody Order order) {
         return service.update(order);
     }
 
