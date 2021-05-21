@@ -41,7 +41,7 @@ public class APIRestClient {
                 .post()
                 .uri(uri)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(order), String.class)
+                .body(Mono.just(order), Order.class)
                 .retrieve()
 //               .bodyToMono(Order.class)
 //               .block();
