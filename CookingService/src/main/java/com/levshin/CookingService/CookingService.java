@@ -3,6 +3,7 @@ package com.levshin.CookingService;
 import com.levshin.CookingService.domain.Order;
 import com.levshin.CookingService.domain.OrderStatus;
 import com.levshin.CookingService.repository.OrderRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,17 +15,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class CookingService {
 
     private final OrderRepository repository;
     private final PizzaMaker pizzaMaker;
     private final CookingClient client;
-
-    public CookingService(OrderRepository repository, PizzaMaker pizzaMaker, CookingClient client) {
-        this.repository = repository;
-        this.pizzaMaker = pizzaMaker;
-        this.client = client;
-    }
 
     public List<Order> findAll() {
         List<Order> orders = new ArrayList<>();

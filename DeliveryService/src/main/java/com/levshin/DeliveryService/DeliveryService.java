@@ -3,6 +3,7 @@ package com.levshin.DeliveryService;
 import com.levshin.DeliveryService.domain.Order;
 import com.levshin.DeliveryService.domain.OrderStatus;
 import com.levshin.DeliveryService.repository.OrderRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,15 +13,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class DeliveryService {
 
     private final OrderRepository repository;
     private final DeliveryClient client;
-
-    public DeliveryService(OrderRepository repository, DeliveryClient client) {
-        this.repository = repository;
-        this.client = client;
-    }
 
     public Iterable<Order> findAll() {
         List<Order> orders = new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.levshin.CookingService.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +10,11 @@ import java.util.Map;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order {
 
-    @JsonIgnore
     @Id
     @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,11 +23,9 @@ public class Order {
     @Column(name = "system_id", unique = true)
     private Long systemId;
 
-    @JsonIgnore
     @Column(name = "recd_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime recdTime;
 
-    @JsonIgnore
     @Column(name = "finish_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime finishTime;
 
@@ -41,7 +39,4 @@ public class Order {
     @Column
     private String description;
 
-    public Long getId() {
-        return id;
-    }
 }

@@ -2,6 +2,7 @@ package com.levshin.CookingService;
 
 import com.levshin.CookingService.domain.Order;
 import com.levshin.CookingService.domain.OrderStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,13 +10,10 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/cooking")
+@AllArgsConstructor
 public class CookingController {
 
     private final CookingService service;
-
-    public CookingController(CookingService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Order> findAllOrders() {

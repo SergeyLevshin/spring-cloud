@@ -2,6 +2,7 @@ package com.levshin.APIService;
 
 import com.levshin.APIService.domain.Order;
 import com.levshin.APIService.domain.OrderStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,15 +11,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@AllArgsConstructor
 public class APIService {
 
     private final OrderRepository repository;
     private final APIRestClient client;
-
-    public APIService(OrderRepository repository, APIRestClient APIRestClient) {
-        this.repository = repository;
-        this.client = APIRestClient;
-    }
 
     public Order findById(long id) {
         return repository.findBySystemId(id).orElseThrow(NoSuchElementException::new);

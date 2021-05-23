@@ -1,6 +1,5 @@
 package com.levshin.APIService.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,17 +17,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
-    @JsonIgnore
     private Long id;
 
     @Column
     private Long systemId;
 
-    @JsonIgnore
     @Column(name = "recd_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime recdTime;
 
-    @JsonIgnore
     @Column(name = "finish_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime finishTime;
 

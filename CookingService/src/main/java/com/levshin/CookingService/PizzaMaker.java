@@ -4,22 +4,18 @@ import com.levshin.CookingService.domain.Order;
 import com.levshin.CookingService.domain.OrderStatus;
 import com.levshin.CookingService.domain.Pizza;
 import com.levshin.CookingService.repository.PizzaRepository;
-import org.springframework.context.annotation.Lazy;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class PizzaMaker {
 
     private final CookingService service;
     private final PizzaRepository repository;
-
-    public PizzaMaker(@Lazy CookingService service, PizzaRepository repository) {
-        this.service = service;
-        this.repository = repository;
-    }
 
     public void process(Order order) {
         Map<Long, Integer> pizzas = order.getPizzas();

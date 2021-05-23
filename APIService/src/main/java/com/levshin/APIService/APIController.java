@@ -2,19 +2,17 @@ package com.levshin.APIService;
 
 import com.levshin.APIService.domain.Order;
 import com.levshin.APIService.domain.OrderStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/pizza-api")
+@AllArgsConstructor
 public class APIController {
 
     private final APIService service;
-
-    public APIController(APIService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Order> getAllOrders() {
