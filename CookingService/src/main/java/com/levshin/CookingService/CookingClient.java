@@ -1,6 +1,6 @@
 package com.levshin.CookingService;
 
-import com.levshin.CookingService.domain.Order;
+import com.levshin.CookingService.DTO.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface CookingClient {
 
     @PutMapping("/pizza-api")
-    Order updateOrder(@RequestBody Order order);
+    OrderDTO updateOrder(@RequestBody OrderDTO orderDTO);
 }

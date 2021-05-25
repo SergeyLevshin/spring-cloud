@@ -1,5 +1,6 @@
 package com.levshin.DeliveryService;
 
+import com.levshin.DeliveryService.DTO.OrderDTO;
 import com.levshin.DeliveryService.domain.Order;
 import com.levshin.DeliveryService.domain.OrderStatus;
 import com.levshin.DeliveryService.repository.OrderRepository;
@@ -18,6 +19,7 @@ public class DeliveryService {
 
     private final OrderRepository repository;
     private final DeliveryClient client;
+    private final OrderMapper orderMapper;
 
     public Iterable<Order> findAll() {
         List<Order> orders = new ArrayList<>();
@@ -42,12 +44,14 @@ public class DeliveryService {
                 .getStatus();
     }
 
-    public Order receiveOrder(Order order) {
+    public Order receiveOrder(OrderDTO orderDTO) {
+        Order order = orderMapper.toOrder(orderDTO);
         order.setRecdTime(LocalDateTime.now());
         order.setStatus(OrderStatus.DELIVERING);
         deliverOrder(order);
         if (order.getStatus().equals(OrderStatus.DELIVERED)) {
-            client.updateOrder(order);
+            order.setFinishTime(LocalDateTime.now());
+            client.updateOrder(orderMapper.toDTO(order));
         }
         return repository.save(order);
     }

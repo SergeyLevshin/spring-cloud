@@ -1,5 +1,6 @@
 package com.levshin.DeliveryService;
 
+import com.levshin.DeliveryService.DTO.OrderDTO;
 import com.levshin.DeliveryService.domain.Order;
 import com.levshin.DeliveryService.domain.OrderStatus;
 import lombok.AllArgsConstructor;
@@ -25,18 +26,18 @@ public class DeliveryController {
         return service.findAllByStatus(status);
     }
 
-    @GetMapping("/{id}")
-    public Order findOrder(@PathVariable("id") long id) {
-        return service.findBSystemId(id).orElseThrow(NoSuchElementException::new);
+    @GetMapping("/{systemId}")
+    public Order findOrder(@PathVariable("systemId") long systemId) {
+        return service.findBSystemId(systemId).orElseThrow(NoSuchElementException::new);
     }
 
-    @GetMapping("/{id}/status")
-    public OrderStatus getOrderStatus(@PathVariable("id") long id) {
-        return service.getOrderStatus(id);
+    @GetMapping("/{systemId}/status")
+    public OrderStatus getOrderStatus(@PathVariable("systemId") long systemId) {
+        return service.getOrderStatus(systemId);
     }
 
     @PostMapping
-    public Order registerOrder(@RequestBody Order order) {
-        return service.receiveOrder(order);
+    public Order registerOrder(@RequestBody OrderDTO orderDTO) {
+        return service.receiveOrder(orderDTO);
     }
 }

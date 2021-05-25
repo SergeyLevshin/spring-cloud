@@ -1,7 +1,7 @@
-package com.levshin.CookingService;
+package com.levshin.OrderService;
 
-import com.levshin.CookingService.domain.Order;
-import com.levshin.CookingService.DTO.OrderDTO;
+import com.levshin.OrderService.DTO.OrderDTO;
+import com.levshin.OrderService.domain.Order;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package com.levshin.CookingService;
 
+import com.levshin.CookingService.DTO.OrderDTO;
 import com.levshin.CookingService.domain.Order;
 import com.levshin.CookingService.domain.OrderStatus;
 import com.levshin.CookingService.repository.OrderRepository;
@@ -21,6 +22,7 @@ public class CookingService {
     private final OrderRepository repository;
     private final PizzaMaker pizzaMaker;
     private final CookingClient client;
+    private final OrderMapper orderMapper;
 
     public List<Order> findAll() {
         List<Order> orders = new ArrayList<>();
@@ -45,27 +47,28 @@ public class CookingService {
                 .getStatus();
     }
 
-    public Order createOrder(Order order) {
+    public Order createOrder(OrderDTO orderDTO) {
+        orderDTO.setStatus(OrderStatus.COOKING);
+
+        Order order = orderMapper.toOrder(orderDTO);
         order.setRecdTime(LocalDateTime.now());
-        order.setStatus(OrderStatus.COOKING);
-        repository.save(order);
         pizzaMaker.process(order);
-        return order;
+        return repository.save(order);
     }
 
     public Order cancelOrder(long id) {
         Order order = repository.findBySystemId(id).orElseThrow(NoSuchElementException::new);
         order.setStatus(OrderStatus.CANCELED);
         order.setFinishTime(LocalDateTime.now());
+        repository.save(order);
         return repository.save(order);
     }
 
     public void finishOrder(Order order) {
-        client.updateOrder(order);
-        System.out.println(order);
         if (!order.getStatus().equals(OrderStatus.CANCELED)) {
             order.setStatus(OrderStatus.COOKED);
         }
+        client.updateOrder(orderMapper.toDTO(order));
         repository.save(order);
     }
 

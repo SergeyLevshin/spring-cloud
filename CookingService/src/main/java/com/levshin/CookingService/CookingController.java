@@ -1,5 +1,6 @@
 package com.levshin.CookingService;
 
+import com.levshin.CookingService.DTO.OrderDTO;
 import com.levshin.CookingService.domain.Order;
 import com.levshin.CookingService.domain.OrderStatus;
 import lombok.AllArgsConstructor;
@@ -25,25 +26,24 @@ public class CookingController {
         return service.findAllByStatus(status);
     }
 
-    @GetMapping("/{id}")
-    public Order findOrder(@PathVariable("id") long id) {
-        return service.findBSystemId(id).orElseThrow(NoSuchElementException::new);
+    @GetMapping("/{systemId}")
+    public Order findOrder(@PathVariable("systemId") long systemId) {
+        return service.findBSystemId(systemId).orElseThrow(NoSuchElementException::new);
     }
 
-    @GetMapping("/{id}/status")
-    public OrderStatus getOrderStatus(@PathVariable("id") long id) {
-        return service.getOrderStatus(id);
+    @GetMapping("/{systemId}/status")
+    public OrderStatus getOrderStatus(@PathVariable("systemId") long systemId) {
+        return service.getOrderStatus(systemId);
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        System.out.println(order);
-        return service.createOrder(order);
+    public Order createOrder(@RequestBody OrderDTO orderDTO) {
+        return service.createOrder(orderDTO);
     }
 
-    @PutMapping("/{id}/cancel")
-    public Order cancelOrder(@PathVariable("id") long id) {
-        return service.cancelOrder(id);
+    @PutMapping("/{systemId}/cancel")
+    public Order cancelOrder(@PathVariable("systemId") long systemId) {
+        return service.cancelOrder(systemId);
     }
 
 }
