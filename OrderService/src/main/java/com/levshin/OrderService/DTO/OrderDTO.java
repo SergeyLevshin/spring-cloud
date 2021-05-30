@@ -12,7 +12,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class OrderDTO {
 
-    private Long systemID;
+    private Long systemId;
 
     private OrderStatus status;
 

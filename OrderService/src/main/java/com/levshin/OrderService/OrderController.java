@@ -4,10 +4,12 @@ import com.levshin.OrderService.DTO.OrderDTO;
 import com.levshin.OrderService.domain.Order;
 import com.levshin.OrderService.domain.OrderStatus;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/pizza-api")
 @AllArgsConstructor
@@ -27,6 +29,7 @@ public class OrderController {
 
     @PostMapping
     public Order createOrder(@RequestBody OrderDTO orderDTO ) {
+        log.info("POST request {}", orderDTO);
         return service.create(orderDTO);
     }
 

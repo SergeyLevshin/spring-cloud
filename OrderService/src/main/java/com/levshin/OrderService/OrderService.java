@@ -51,7 +51,7 @@ public class OrderService {
         registerOrder(order);
         orderDTO.setStatus(OrderStatus.NEW);
         orderDTO = client.sendOrderToCooking(orderDTO);
-        order = repository.findBySystemId(orderDTO.getSystemID()).orElseThrow();
+        order = repository.findBySystemId(orderDTO.getSystemId()).orElseThrow();
         return repository.save(order);
     }
 
@@ -62,7 +62,7 @@ public class OrderService {
     }
 
     public Order update(OrderDTO orderDTO) {
-        Order order = repository.findBySystemId(orderDTO.getSystemID()).orElseThrow(NoSuchElementException::new);
+        Order order = repository.findBySystemId(orderDTO.getSystemId()).orElseThrow(NoSuchElementException::new);
         if (orderDTO.getStatus().equals(OrderStatus.COOKED)) {
             order.setStatus(OrderStatus.DELIVERING);
             orderDTO.setStatus(OrderStatus.NEW);

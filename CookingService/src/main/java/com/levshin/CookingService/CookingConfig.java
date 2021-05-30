@@ -1,5 +1,6 @@
 package com.levshin.CookingService;
 
+import brave.sampler.Sampler;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
@@ -18,6 +19,10 @@ public class CookingConfig {
             .setSkipNullEnabled(true)
             .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
         return mapper;
+    }
 
+    @Bean
+    public Sampler defaultSampler() {
+        return Sampler.ALWAYS_SAMPLE;
     }
 }

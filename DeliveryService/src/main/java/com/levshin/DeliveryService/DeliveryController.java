@@ -4,11 +4,13 @@ import com.levshin.DeliveryService.DTO.OrderDTO;
 import com.levshin.DeliveryService.domain.Order;
 import com.levshin.DeliveryService.domain.OrderStatus;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @RestController
 @RequestMapping("/delivery")
 @AllArgsConstructor
@@ -38,6 +40,7 @@ public class DeliveryController {
 
     @PostMapping
     public Order registerOrder(@RequestBody OrderDTO orderDTO) {
+        log.info("POST request {}", orderDTO);
         return service.receiveOrder(orderDTO);
     }
 }

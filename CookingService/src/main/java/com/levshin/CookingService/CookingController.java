@@ -4,11 +4,13 @@ import com.levshin.CookingService.DTO.OrderDTO;
 import com.levshin.CookingService.domain.Order;
 import com.levshin.CookingService.domain.OrderStatus;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @RestController
 @RequestMapping("/cooking")
 @AllArgsConstructor
@@ -38,6 +40,7 @@ public class CookingController {
 
     @PostMapping
     public Order createOrder(@RequestBody OrderDTO orderDTO) {
+        log.info("POST request {}", orderDTO);
         return service.createOrder(orderDTO);
     }
 
